@@ -5,6 +5,10 @@
 * push them to servers
 * use your keys to login to your servers
 
+###Install Dependencies
+
+    bundle
+
 ###Push your generated keys
 
 This will push your generated keys to your servers.
