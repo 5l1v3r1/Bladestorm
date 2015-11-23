@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    highline (1.7.8)
+    net-ssh (3.0.1)
+    ssh-copy-id.rb (0.1.1)
+      highline (>= 1.6.15)
+      net-ssh (>= 2.6)
+    sshkey (1.7.0)
+    thor (0.19.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ssh-copy-id.rb
+  sshkey
+  thor
+
+BUNDLED WITH
+   1.10.6
