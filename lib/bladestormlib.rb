@@ -12,7 +12,7 @@ module Bladestorm
     IO.write("#{$PUBLIC_KEY}", new_key.ssh_public_key)
     puts "public key was written to #{$PUBLIC_KEY}"
     IO.write("#{$PRIVATE_KEY}", new_key.private_key)
-    File.chmod(0700, "#{$PRIVATE_KEY}")
+    File.chmod(0600, "#{$PRIVATE_KEY}")
     puts "private key was written to #{$PRIVATE_KEY}"
   end
 
@@ -23,18 +23,24 @@ module Bladestorm
   private
 
   def askpassword_for_certificate
-    puts "Please enter a passphrase for your certificate"
-    STDIN.gets.chomp
+    STDOUT.print "Please enter a passphrase for your certificate: "
+    certificate_password = STDIN.noecho(&:gets).chomp
+    puts ''
+    certificate_password
   end
 
   def askpassword_for_ssh
-    puts "Please enter the password for the ssh server"
-    STDIN.gets.chomp
+    STDOUT.print "Please enter the password for the ssh server: "
+    ssh_password = STDIN.noecho(&:gets).chomp
+    puts ''
+    ssh_password
   end
 
   def askhost
-    puts "Please enter a host to push your key to [example: admin@127.0.0.1]"
-    split_hosts(STDIN.gets.chomp)
+    STDOUT.print "Please enter a host to push your key to [example: admin@127.0.0.1]: "
+    all_hosts = split_hosts(STDIN.gets.chomp)
+    puts ''
+    all_hosts
   end
 
   def split_hosts(hosts)
@@ -57,6 +63,4 @@ module Bladestorm
   def command_exists?(cmd)
     which(cmd) != nil
   end
-
-
 end
