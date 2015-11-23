@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
 module Bladestorm
+  require 'ssh-copy-id'
+  require 'net/ssh'
+  require "sshkey"
+
 
   $KEYS_FOLDER = 'keys'
   $PUBLIC_KEY = 'keys/id_rsa.pub'
@@ -18,6 +22,13 @@ module Bladestorm
 
   def connect_with_ssh(host)
     exec("ssh -i #{$PRIVATE_KEY} #{host}")
+  end
+
+  def execute_on_server(options)
+    ret = Net::SSH.start(options[:host], options[:user], {keys: "#{$PRIVATE_KEY}"}) do |ssh|
+        ssh.exec! 'echo "hello from:$USER"'
+      end
+    puts ret
   end
 
   private

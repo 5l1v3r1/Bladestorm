@@ -13,6 +13,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  net-ssh
   ssh-copy-id.rb
   sshkey
   thor

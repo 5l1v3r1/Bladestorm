@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
 
-require "sshkey"
 require "thor"
-require 'ssh-copy-id'
-require_relative 'lib/bladestormlib'
 
-include Bladestorm
+require_relative 'lib/bladestormlib'
 
 
 class BladestormApp < Thor
+
+  include Bladestorm
 
   desc 'pushkey', 'push your generated keys to a server'
   method_option :hosts, :desc => "specify the host [example: admin@127.0.0.1] (in case of multiple, delimit with ,)"
@@ -45,6 +44,23 @@ class BladestormApp < Thor
         generate
     end
   end
+
+  #WIP
+  desc 'execute', 'execute a command on the other server'
+  method_option :host, :desc => "Specify the host"
+  def execute
+    if options[:host] != nil
+      user, host = options[:host].split('@')
+      execute_on_server({
+          :host => host,
+          :user => user
+        })
+    else
+      puts "Please specify a host (--host=)"
+    end
+  end
+
+
 end
 
 Dir.mkdir "#{$KEYS_FOLDER}" unless Dir.exists?("#{$KEYS_FOLDER}")
